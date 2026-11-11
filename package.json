@@ -1,0 +1,29 @@
+{
+  "name": "pharos-doc-grounded-builder-agent",
+  "version": "1.0.0",
+  "description": "Doc-Grounded Builder Agent for Pharos: Retrieves and cites official docs via Docs MCP, generates an action plan, executes supported operations via Chain MCP, and verifies on-chain outcomes.",
+  "type": "module",
+  "scripts": {
+    "build": "node --experimental-strip-types src/build.ts",
+    "bundle:api": "esbuild src/api/*.ts --bundle --platform=node --format=esm --target=node20 --outdir=api",
+    "test": "node --dns-result-order=ipv4first --test --experimental-strip-types tests/unit/*.test.ts",
+    "test:integration": "node --dns-result-order=ipv4first --test --experimental-strip-types tests/integration/*.test.ts",
+    "test:all": "node --dns-result-order=ipv4first --test --experimental-strip-types tests/**/*.test.ts",
+    "start": "node --dns-result-order=ipv4first --experimental-strip-types src/server.ts"
+  },
+  "keywords": [
+    "pharos",
+    "pharos-agent-arena",
+    "docs-mcp",
+    "chain-mcp",
+    "builder-agent",
+    "multicall3",
+    "non-custodial",
+    "typescript"
+  ],
+  "author": "JimmyOgb",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

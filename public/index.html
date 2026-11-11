@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharos Doc-Grounded Builder Agent</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-mark">⚡</div>
+        <div class="brand-text">
+          <h1>Pharos Doc-Grounded Builder Agent</h1>
+          <p class="subtitle">Official Docs MCP Grounding · Action Planning · Chain MCP Execution · Outcome Verification</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="badge network-badge">
+          <span class="status-dot live"></span>
+          <span>Pharos Pacific Mainnet (1672)</span>
+        </div>
+        <div class="badge mcp-badge">
+          <span class="status-dot live"></span>
+          <span>Docs & Chain MCP Online</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-content">
+      <!-- Section 1: User Request Intake -->
+      <section class="card request-section">
+        <div class="card-header">
+          <h2>1. Ask "How do I do X on Pharos?"</h2>
+          <span class="tag">Doc-Grounded Natural Language Intake</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="questionInput">What do you want to accomplish on Pharos?</label>
+            <div class="input-with-button">
+              <input
+                type="text"
+                id="questionInput"
+                placeholder="e.g., How do I query live block timestamp and chain ID from MultiCall3 on Pharos?"
+                value="How do I query live block timestamp and chain ID from MultiCall3 on Pharos?"
+              />
+              <button id="submitBtn" class="btn btn-primary">
+                <span class="btn-text">Execute Workflow</span>
+                <span class="spinner" style="display:none;"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="examples-container">
+            <span class="examples-label">Official Test Scenarios:</span>
+            <div class="example-pills">
+              <button class="pill" data-query="How do I query live block timestamp and chain ID from MultiCall3 on Pharos?">
+                🔍 1. MultiCall3 Contract Query (Read-Only)
+              </button>
+              <button class="pill" data-query="How do I check the native PROS balance and transaction count (nonce) of an address on Pharos?">
+                👛 2. Account & Wallet State Inspection
+              </button>
+              <button class="pill" data-query="How do I prepare a native PROS transfer on Pharos Pacific Mainnet?">
+                ✍️ 3. Prepare Unsigned Transfer (Non-Custodial)
+              </button>
+              <button class="pill pill-warning" data-query="How do I stake with Lido liquid staking on Pharos?">
+                🛡️ 4. Unsupported Request (Safety Refusal)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Banner -->
+      <section id="statusBanner" class="status-banner" style="display: none;">
+        <div class="status-banner-content">
+          <div class="status-icon" id="statusIcon">⚡</div>
+          <div class="status-info">
+            <div class="status-title-row">
+              <h3 id="statusTitle">Execution Completed</h3>
+              <span id="statusBadge" class="status-pill status-verified">VERIFIED</span>
+            </div>
+            <p id="statusSummary" class="status-summary"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Grid -->
+      <div id="resultsGrid" class="results-grid" style="display: none;">
+        <!-- Section 2: Documentation Panel -->
+        <section class="card docs-panel">
+          <div class="card-header">
+            <h3>2. Official Docs MCP Citations</h3>
+            <span id="coverageBadge" class="tag tag-success">Documented</span>
+          </div>
+          <div class="card-body">
+            <div id="citationsList" class="citations-list"></div>
+          </div>
+        </section>
+
+        <!-- Section 3: Execution Plan Panel -->
+        <section class="card plan-panel">
+          <div class="card-header">
+            <h3>3. Structured Action Plan</h3>
+            <span class="tag">Plan Prior to Action</span>
+          </div>
+          <div class="card-body">
+            <div id="planContainer"></div>
+          </div>
+        </section>
+
+        <!-- Section 4: Execution & MCP Telemetry -->
+        <section class="card exec-panel">
+          <div class="card-header">
+            <h3>4. Chain MCP Live Execution</h3>
+            <span class="tag">Zero Simulation</span>
+          </div>
+          <div class="card-body">
+            <div id="execList" class="exec-list"></div>
+            <!-- Unsigned Tx Sub-panel -->
+            <div id="unsignedTxPanel" class="unsigned-tx-panel" style="display: none;">
+              <div class="unsigned-header">
+                <h4>⚠️ Unsigned Transaction Review (Awaiting User Signature)</h4>
+                <span class="tag tag-warning">Non-Custodial</span>
+              </div>
+              <p class="unsigned-desc">
+                In strict compliance with safety rules, the agent prepared the transaction parameters below but did <strong>not</strong> sign or broadcast it. Review and sign manually in your wallet.
+              </p>
+              <div class="code-block">
+                <pre><code id="unsignedTxJson"></code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Outcome Verification Panel -->
+        <section class="card verify-panel">
+          <div class="card-header">
+            <h3>5. Independent On-Chain Outcome Verification</h3>
+            <span class="tag">Evidence Grounding</span>
+          </div>
+          <div class="card-body">
+            <div id="verificationDetails"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="https://docs.pharos.xyz" target="_blank" rel="noopener">Official Pharos Docs</a>
+        <span>·</span>
+        <a href="https://mcp.pharos.xyz/mcp" target="_blank" rel="noopener">Chain MCP Endpoint</a>
+        <span>·</span>
+        <a href="https://pharos.socialscan.io" target="_blank" rel="noopener">Pharos SocialScan Explorer</a>
+        <span>·</span>
+        <a href="https://github.com/JimmyOgb/pharos-doc-grounded-builder-agent" target="_blank" rel="noopener">GitHub Repository</a>
+      </div>
+      <p class="disclaimer">
+        Built for Pharos Agent Arena. Strictly non-custodial. Zero private keys stored. Zero transaction signing. No simulated results.
+      </p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
